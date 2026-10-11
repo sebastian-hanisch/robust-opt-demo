@@ -9,7 +9,7 @@ Umlagerung und Fehlmenge, sechs Standorte, als lineares Programm.
 ## Warum dieses Problem
 
 Wer keine Verteilung kennt oder keiner trauen will, plant auf den schlimmsten Fall einer Menge: Jeder Standort darf um höchstens δ vom Mittel abweichen, und höchstens **Γ** Standorte tun das
-zugleich. Γ = 0 ist der Mittelwertplan, Γ = 6 der klassische Worst Case. Die Demo misst, **was die Absicherung im Mittel kostet, was sie im Schwanz bringt, und für wie viele wirkliche
+zugleich. Γ = 0 ist der Mittelwertplan, Γ = 6 der klassische Worst Case. Die Demo misst, **was die Absicherung im Mittel kostet, was sie im Tail bringt, und für wie viele wirkliche
 Szenarien die Garantie überhaupt gilt**.
 
 ## Modell
@@ -23,7 +23,7 @@ Geprüft wird auf 600 gleich wahrscheinlichen **lognormalen** Referenzszenarien 
   einem Stufe-2-Block (Γ = 2: 73 Ecken, Γ = 6: 729).
 - **Mittelwertplan:** Γ = 0, ein Szenario in Höhe des Mittels.
 - **Prüfen:** beide auf den 600 Referenzszenarien: Mittel, CVaR 95 %, schlimmster Fall in U, Anteil der Referenzszenarien in U.
-- **Preis-Nutzen-Kurve:** Γ = 0 bis 6 mit demselben δ; **der Knick** ist das kleinste Γ, das die Hälfte des Schwanznutzens der vollen Box holt.
+- **Preis-Nutzen-Kurve:** Γ = 0 bis 6 mit demselben δ; **der Knick** ist das kleinste Γ, das die Hälfte des Tail-Nutzens der vollen Box holt.
 - **Vergleich:** der Plan, der den CVaR (90 %) einer Stichprobe von 100 Szenarien minimiert.
 
 ## Befunde (gemessen, keine Behauptungen)
@@ -33,7 +33,7 @@ Voreinstellung (Seed 7, δ = 40 %, Streuung 35 %, Kapazität frei, Umlagerung an
 | Frage | Befund |
 |---|---|
 | **Was kostet die Absicherung, was bringt sie?** | Γ = 2: Mittel +5,6 %, CVaR 95 % −9,1 %. Γ = 3: +9,3 % / −12,8 %. Γ = 6 (volle Box): +20,7 % / −20,2 %. Der Preis wächst schneller als der Nutzen. |
-| **Wo ist der Knick?** | Γ = 3 holt 63 % des Schwanznutzens der vollen Box für 45 % der Mehrkosten. Größere Γ schützen vor Fällen, die kaum noch vorkommen. |
+| **Wo ist der Knick?** | Γ = 3 holt 63 % des Tail-Nutzens der vollen Box für 45 % der Mehrkosten. Größere Γ schützen vor Fällen, die kaum noch vorkommen. |
 | **Was ist der robuste Plan?** | Ein Kapazitätspuffer: Gesamtkapazität / mittlere Nachfrage steigt von 1,00 (Γ = 0) auf 1,16 (Γ = 2) und 1,40 (Γ = 6 = 1 + δ). |
 | **Was kauft man in der Menge?** | Im schlimmsten Fall von U(2, 40 %) kostet der robuste Plan 671, der Mittelwertplan 740: 9,3 % weniger. Das ist die eigentliche Garantie; für die lognormalen Referenzszenarien zählt Mittel und CVaR (oben). |
 | **Für wie viele wirkliche Szenarien gilt die Garantie?** | Bei Γ = 2 liegen 6 % der lognormalen Referenzszenarien in der Menge, bei der vollen Box 30 %. Außerhalb gibt es keine Zusage. |
@@ -46,7 +46,7 @@ Voreinstellung (Seed 7, δ = 40 %, Streuung 35 %, Kapazität frei, Umlagerung an
 - **Die Menge ist gesetzt.** δ und Γ sind Setzungen des Planers, nicht aus Daten abgeleitet. Eine falsch gewählte Menge verschenkt Kosten oder Schutz.
 - **Die Garantie gilt nur in der Menge.** Die lognormalen Referenzszenarien liegen überwiegend außerhalb; für sie ist der robuste Plan nur durch seinen Puffer besser, nicht durch eine Zusage.
 - **Nur ganzzahliges Γ.** Die Ecken sind für ganzzahliges Γ aufgezählt; das fraktionale Budget von Bertsimas und Sim ist nicht abgebildet.
-- **Nur CVaR 95 % als Schwanzmaß in der Prüfung.** Eine Aussage über „den“ Schwanz hängt am Maß.
+- **Nur CVaR 95 % als Tail-Maß in der Prüfung.** Eine Aussage über „den“ Tail hängt am Maß.
 - **Eine Instanz, feste Preise.** Die Prozentzahlen hängen an Zukaufpreis, Strafe und Umlagerung.
 
 ## Verifikation

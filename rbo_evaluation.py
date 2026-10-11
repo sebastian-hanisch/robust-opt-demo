@@ -111,7 +111,7 @@ def analyse(settings: Settings) -> Analysis:
 
 
 def knee(curve) -> int | None:
-    """Kleinstes gamma, das mindestens die Hälfte des Schwanznutzens (CVaR-Absenkung bis gamma = J) holt; None ohne Nutzen."""
+    """Kleinstes gamma, das mindestens die Hälfte des Tail-Nutzens (CVaR-Absenkung bis gamma = J) holt; None ohne Nutzen."""
     total = -curve[-1].cvar_change_pct
     if total < 1.0:
         return None

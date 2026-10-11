@@ -24,7 +24,7 @@ def test_price_and_benefit_rise_with_gamma_and_the_price_rises_faster(presets):
     means = [r.mean_change_pct for r in curve]
     cvars = [-r.cvar_change_pct for r in curve]
     assert means == sorted(means) and cvars == sorted(cvars)
-    assert means[-1] > cvars[-1] * 0.9           # am Ende kostet die Absicherung im Mittel so viel, wie der Schwanz gewinnt
+    assert means[-1] > cvars[-1] * 0.9           # am Ende kostet die Absicherung im Mittel so viel, wie der Tail gewinnt
     assert 0.0 < cvars[2] / cvars[-1] < 0.6      # Γ = 2 holt weniger als 60 % des Nutzens
 
 

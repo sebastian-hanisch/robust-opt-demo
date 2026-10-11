@@ -41,7 +41,7 @@ st.markdown(
     """
 Die **robuste Optimierung** plant nicht auf Wahrscheinlichkeiten, sondern auf eine **Menge** möglicher Nachfragen: Jeder Standort darf um höchstens δ vom Mittel abweichen,
 und höchstens **Γ Standorte** tun das gleichzeitig. Der Plan ist dann für den schlimmsten Fall in dieser Menge optimal. Diese Demo fragt: **Was kostet diese Absicherung im Mittel,
-was bringt sie im Schwanz, und wofür gilt die Garantie überhaupt?**
+was bringt sie im Tail, und wofür gilt die Garantie überhaupt?**
 
 Anders als die Fall-Demos zeigt sie **ein** Verfahren an einem wachsenden Beispiel, mit demselben Kapazitäts-Vehikel wie die
 [Wurzel der Linie](https://github.com/sebastian-hanisch/newsvendor-evpi-demo). Weiter unten: der Vergleich mit dem CVaR-Plan, **🚧 Wo die Annahmen enden** und **📐 Mathematische Formulierung**.
@@ -117,7 +117,7 @@ ref = reference_demand(inst)
 pv_mean = evaluate_plan(inst, np.asarray(base.x), ref, C.TAIL_ALPHA)
 pv_rob = evaluate_plan(inst, np.asarray(rob.x), ref, C.TAIL_ALPHA)
 st.plotly_chart(build_distribution(pv_mean, pv_rob), width="stretch", key="distribution_chart")
-st.caption("Verteilung der Gesamtkosten über die 600 lognormalen Referenzszenarien. Der robuste Plan verschiebt Kosten aus dem rechten Schwanz in die Mitte und bezahlt dafür im Mittel.")
+st.caption("Verteilung der Gesamtkosten über die 600 lognormalen Referenzszenarien. Der robuste Plan verschiebt Kosten aus dem rechten Tail in die Mitte und bezahlt dafür im Mittel.")
 
 left, right = st.columns(2)
 with left:
@@ -135,7 +135,7 @@ if settings.gamma == 0:
 elif a.verdict == "lohnt":
     st.success(
         f"**Ja, hier lohnt sie:** Γ = {settings.gamma} senkt den CVaR 95 % um {_de(-rob.cvar_change_pct)} %, die mittleren Kosten steigen um {_de(rob.mean_change_pct)} %. "
-        f"Je gewonnenem Prozent Schwanz kostet das {_de(rob.mean_change_pct / -rob.cvar_change_pct, 2)} Prozent im Mittel."
+        f"Je gewonnenem Prozent Tail kostet das {_de(rob.mean_change_pct / -rob.cvar_change_pct, 2)} Prozent im Mittel."
     )
 elif a.verdict == "schadet":
     st.warning(
@@ -148,7 +148,7 @@ k = knee(a.curve)
 if k is not None:
     row_k, row_all = a.curve[k], a.curve[-1]
     st.caption(
-        f"**Der Knick:** Γ = {k} holt {_de(100 * row_k.cvar_change_pct / row_all.cvar_change_pct, 0)} % des Schwanznutzens von Γ = {C.GAMMA_MAX} "
+        f"**Der Knick:** Γ = {k} holt {_de(100 * row_k.cvar_change_pct / row_all.cvar_change_pct, 0)} % des Tail-Nutzens von Γ = {C.GAMMA_MAX} "
         f"für {_de(100 * row_k.mean_change_pct / row_all.mean_change_pct, 0)} % der Mehrkosten. Größere Γ schützen vor Fällen, die kaum noch vorkommen."
     )
 st.caption(
@@ -192,8 +192,8 @@ st.markdown(
 | Annahme | Was passiert, wenn sie verletzt ist | Wer setzt an |
 |---|---|---|
 | **Die Menge beschreibt die Nachfrage** | Die Garantie gilt nur in der Menge. Von den lognormalen Referenzszenarien liegt nur ein kleiner Teil darin (die volle Box etwa ein Drittel): Außerhalb gibt es keine Zusage. | – |
-| **Kapazität ist frei wählbar** | Bei knappem Budget wird nur verteilt: Der robuste Plan unterscheidet sich kaum vom Mittelwertplan und gewinnt im Schwanz nichts. | – |
-| **Der schlimmste Fall ist das Ziel** | Er kann sehr unwahrscheinlich sein; ein Plan für Γ = 6 bezahlt für Fälle, die in der Referenz nie vorkommen. Wer Wahrscheinlichkeiten kennt, kann den Schwanz direkt gewichten. | [CVaR-Demo](https://github.com/sebastian-hanisch/cvar-demo): Risiko als gewichtetes Ziel statt Garantie |
+| **Kapazität ist frei wählbar** | Bei knappem Budget wird nur verteilt: Der robuste Plan unterscheidet sich kaum vom Mittelwertplan und gewinnt im Tail nichts. | – |
+| **Der schlimmste Fall ist das Ziel** | Er kann sehr unwahrscheinlich sein; ein Plan für Γ = 6 bezahlt für Fälle, die in der Referenz nie vorkommen. Wer Wahrscheinlichkeiten kennt, kann den Tail direkt gewichten. | [CVaR-Demo](https://github.com/sebastian-hanisch/cvar-demo): Risiko als gewichtetes Ziel statt Garantie |
 | **δ und Γ sind bekannt** | Beide sind Setzungen des Planers; eine falsch gewählte Menge verschenkt Kosten oder Schutz. Hier nicht aus Daten abgeleitet. | [Stichproben-Demo (SAA)](https://github.com/sebastian-hanisch/saa-demo): was eine Stichprobe über die Verteilung sagt |
 | **Eine Instanz, feste Preise** | Wie viel Robustheit kostet, hängt an Zukaufpreis, Fehlmenge-Strafe und Umlagerung. | – |
 """
