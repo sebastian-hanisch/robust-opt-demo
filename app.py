@@ -48,6 +48,17 @@ Anders als die Fall-Demos zeigt sie **ein** Verfahren an einem wachsenden Beispi
 """
 )
 
+# erklaerseite:einfach:start (erzeugt von tools/set_demo_explainer.py (Website-Repo) aus tools/content/explainers/robust-opt-erklaert.json, nicht von Hand ändern)
+with st.expander("💬 In einfachen Worten"):
+    st.markdown(
+        """
+Wer Kapazität vorhalten muss, bevor die Nachfrage bekannt ist, kennt oft keine verlässlichen Wahrscheinlichkeiten. Die **robuste Optimierung** plant dann für eine **Menge** möglicher Nachfragen: Jeder Standort darf um höchstens δ vom Mittel abweichen, und ein Budget Γ begrenzt, wie viele Standorte zugleich an ihre Grenze gehen. Der Plan ist für den schlimmsten Fall in dieser Menge am billigsten. Die Demo fragt, was diese Absicherung im Mittel kostet, was sie bei den teuersten Szenarien bringt und für wie viele Szenarien aus einer wirklichen Verteilung die Zusage überhaupt gilt. Der Haken: Die Zusage gilt nur in der Menge, und die Menge setzt der Planer. Es ist ein stark vereinfachtes Modell mit erfundenen Standorten und Preisen.
+
+[Ausführlich und verständlich erklärt, mit Fachteil](https://sebastianhanisch.net/robust-opt-erklaert.html)
+        """
+    )
+# erklaerseite:einfach:end
+
 with st.expander("So funktioniert die robuste Planung", expanded=True):
     st.markdown(
         """
@@ -202,6 +213,24 @@ st.markdown(
 st.markdown("---")
 
 with st.expander("📐 Mathematische Formulierung"):
+    # erklaerseite:lesehilfe:start (erzeugt von tools/set_demo_explainer.py (Website-Repo) aus tools/content/explainers/robust-opt-erklaert.json, nicht von Hand ändern)
+    st.markdown(
+        r"""
+**Lesehilfe.** Gegeben sind sechs Standorte mit mittlerer Nachfrage $\mu_j$, Vorhaltungskosten $c$, Stufe-2-Kosten $Q(x,D)$ und eine Unsicherheitsmenge $U(\Gamma,\delta)$. Gesucht ist die Kapazität $x$, die Vorhaltung plus Kosten des schlimmsten Falls in $U$ minimiert, und wie dieser Plan auf lognormalen Referenzszenarien abschneidet.
+
+| Symbol | Bedeutung |
+|---|---|
+| $x_j$, $c$ | Kapazität am Standort $j$ und Vorhaltungskosten je Einheit |
+| $D$, $\mu_j$ | Nachfrage der Standorte und ihr Mittel |
+| $\delta$, $\Gamma$ | größte relative Abweichung je Standort und Budget der Unsicherheit |
+| $U(\Gamma,\delta)$ | Menge der Nachfragen, die beide Grenzen einhalten |
+| $Q(x,D)$ | Kosten nach der Nachfrage (Umlagerung, Zukauf, Fehlmenge) |
+| $V$, $D_v$, $t$ | aufgezählte Ecken der Menge, ihre Nachfrage und die Hilfsvariable für die teuerste Ecke |
+
+[Schritt für Schritt erklärt, mit Herleitung und Literatur](https://sebastianhanisch.net/robust-opt-erklaert.html#fachleute)
+        """
+    )
+    # erklaerseite:lesehilfe:end
     st.markdown(
         r"""
 **Modell.** Wie in der Wurzel der Linie: Kapazität $x\ge 0$ mit Kosten $c\,\mathbf 1^\top x$ und Budget, nach der Nachfrage $D$ die Stufe-2-Kosten $Q(x,D)$ (Umlagerung, Zukauf, Fehlmenge).
