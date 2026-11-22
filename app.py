@@ -59,12 +59,12 @@ Wer Kapazität vorhalten muss, bevor die Nachfrage bekannt ist, kennt oft keine 
     )
 # erklaerseite:einfach:end
 
-with st.expander("So funktioniert die robuste Planung", expanded=True):
+with st.expander("So funktioniert die robuste Optimierung", expanded=True):
     st.markdown(
         """
 1. **Menge statt Verteilung:** Die Nachfrage jedes Standorts liegt in [(1 − δ) · Mittel, (1 + δ) · Mittel]. Höchstens **Γ** Standorte sind gleichzeitig am Rand (Budget der Unsicherheit).
 2. **Schlimmster Fall an den Ecken:** Die Kosten nach der Nachfrage sind in der Nachfrage konvex, ihr Maximum über die Menge liegt also an einer Ecke: Standorte am Rand oder im Mittel.
-3. **Als LP:** Eine Hilfsvariable t trägt die Kosten der teuersten Ecke; der Plan minimiert Vorhaltung plus t.
+3. **Als LP:** Eine Hilfsvariable t steht für die Kosten der teuersten Ecke; der Plan minimiert Vorhaltung plus t.
 4. **Prüfen:** der Plan auf 600 lognormalen Referenzszenarien, die **nicht** in der Menge sein müssen: Mittel, CVaR 95 % und wie viele Szenarien überhaupt in der Menge liegen.
         """
     )
